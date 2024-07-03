@@ -16,8 +16,8 @@ export const NavStep = ({ stepNo, stepTitle }: NavStepProps) => {
         {stepNo}
       </span>
       <div className="hidden lg:flex flex-col uppercase">
-        <p className="text-neutrals-coolGray text-lg">Step {stepNo}</p>
-        <h3 className="text-neutrals-alabaster text-xl font-bold tracking-wider">
+        <p className="text-neutrals-coolGray">Step {stepNo}</p>
+        <h3 className="text-neutrals-alabaster font-bold tracking-wider">
           {stepTitle}
         </h3>
       </div>
