@@ -54,9 +54,9 @@ export const SelectPlan = () => {
           onSelect={handlePlanSelect}
         />
         <div className="w-full flex justify-center gap-4 bg-neutrals-magnolia rounded-lg p-4">
-          <h2 className="text-primary-marine font-bold">Monthly</h2>
+          <h2 className={`${billing === 'mo' ? 'text-primary-marine' : 'text-neutrals-coolGray'} font-bold`}>Monthly</h2>
           <ToggleBilling handleClick={setBilling} />
-          <h2 className="text-primary-marine font-bold">Yearly</h2>
+          <h2 className={`${billing === 'yr' ? 'text-primary-marine' : 'text-neutrals-coolGray'} font-bold`}>Yearly</h2>
         </div>
       </form>
     </div>
