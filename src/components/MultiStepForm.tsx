@@ -19,6 +19,9 @@ export const MultiStepForm = () => {
       case 2:
         navigate("/multi-step-form/select-plan");
         break;
+      case 3:
+        navigate("/multi-step-form/add-ons");
+        break;
       default:
         navigate("/multi-step-form/personal-info");
     }
@@ -34,7 +37,7 @@ export const MultiStepForm = () => {
 
   useEffect(() => {
     handleNavigate(activeStep);
-  }, [activeStep])
+  }, [activeStep]);
 
   return (
     <div className="max-w-[1024px] w-full lg:h-[60%] flex flex-col lg:flex-row bg-white rounded-xl lg:p-4">

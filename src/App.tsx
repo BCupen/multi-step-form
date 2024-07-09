@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { MultiStepForm } from "./components/MultiStepForm";
 import { PersonalInfo } from "./pages/PersonalInfo";
 import { SelectPlan } from "./pages/SelectPlan";
+import { AddOns } from "./pages/AddOns";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/multi-step-form/" element={<MultiStepForm />}>
           <Route path="personal-info" element={<PersonalInfo />} />
           <Route path="select-plan" element={<SelectPlan />} />
+          <Route path="add-ons" element={<AddOns />} />
         </Route>
       </Routes>
     </div>
