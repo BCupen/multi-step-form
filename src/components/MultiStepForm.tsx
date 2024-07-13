@@ -22,6 +22,9 @@ export const MultiStepForm = () => {
       case 3:
         navigate("/multi-step-form/add-ons");
         break;
+      case 4:
+        navigate("/multi-step-form/summary");
+        break;
       default:
         navigate("/multi-step-form/personal-info");
     }
