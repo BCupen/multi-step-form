@@ -7,7 +7,7 @@ export interface FormState {
   name: string;
   email: string;
   phoneNumber: string;
-  plan: RadioCardType;
+  plan: RadioCardType | undefined;
   billingPeriod: "mo" | "yr";
   addOns: CheckboxCardType[];
 }
@@ -17,10 +17,7 @@ const initialState: FormState = {
   name: "",
   email: "",
   phoneNumber: "",
-  plan: {
-    title: "",
-    cost: 0,
-  },
+  plan: undefined,
   billingPeriod: "mo",
   addOns: [],
 };
@@ -41,11 +38,12 @@ export const formSlice = createSlice({
     setPhoneNumber: (state, action: PayloadAction<string>) => {
       state.phoneNumber = action.payload;
     },
-    setPlan: (state, action: PayloadAction<RadioCardType>) => {
+    setPlan: (state, action: PayloadAction<RadioCardType | undefined>) => {
       state.plan = action.payload;
     },
     setBillingPeriod: (state, action: PayloadAction<"mo" | "yr">) => {
       state.billingPeriod = action.payload;
+      console.log(state.billingPeriod);
     },
     addAddOn: (state, action: PayloadAction<CheckboxCardType>) => {
       state.addOns = [action.payload, ...state.addOns];
@@ -56,5 +54,5 @@ export const formSlice = createSlice({
   },
 });
 
-export const { setActiveStep } = formSlice.actions;
+export const { setActiveStep, setName, setEmail, setPhoneNumber, setPlan, setBillingPeriod, setAddOns } = formSlice.actions;
 export default formSlice.reducer;

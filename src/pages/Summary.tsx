@@ -1,5 +1,9 @@
+import { useAppSelector } from "../data/hooks";
+
 export const Summary = () => {
-  return (
+    const {plan, billingPeriod, addOns} = useAppSelector(state => state.form);
+    const total = (plan?.cost[billingPeriod] || 0) +  addOns.reduce((sum, curr) => sum + curr.cost[billingPeriod], 0);
+    return (
     <div className="w-full flex flex-col gap-10 rounded-lg bg-white p-8 -mt-24 lg:mt-0">
       <div className="flex flex-col gap-4">
         <h1 className="text-primary-marine text-3xl font-bold tracking-wide">
@@ -14,16 +18,29 @@ export const Summary = () => {
         <div className="w-full flex items-center justify-between bg-transparent pb-5 border-b border-neutrals-lightGray">
           <span>
             <h2 className="text-primary-marine font-bold tracking-wide">
-              Arcade (Monthly)
+              {plan?.title} {billingPeriod === "mo" ? "(Monthly)" : "(Yearly)"}
             </h2>
             <button className="text-neutrals-coolGray underline decoration-2">
               Change
             </button>
           </span>
           <p className="text-primary-marine font-bold">
-            $9/mo
+            ${plan?.cost[billingPeriod]}/{billingPeriod}
           </p>
         </div>
+        <ul>
+            {addOns.map((addOn) => 
+                <li className="w-full flex justify-between py-2">
+                    <h3 className="text-neutrals-coolGray font-medium">{addOn.title}</h3>
+                    <p className="text-primary-marine">+${addOn.cost[billingPeriod]}/{billingPeriod}</p>
+                </li>
+            )}
+        </ul>
+      </div>
+
+      <div className="flex justify-between px-6">
+        <h3 className="text-neutrals-coolGray">Total (per {billingPeriod === "mo" ? "month" : "year"})</h3>
+        <p className="font-bold text-primary-purpleBlue text-lg">${total}/{billingPeriod}</p>
       </div>
     </div>
   );

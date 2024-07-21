@@ -1,10 +1,23 @@
 import { useState } from "react";
 import { InputField } from "../components/InputField";
+import { useAppSelector, useAppDispatch } from "../data/hooks";
+import {
+  setName as setGlobalName,
+  setEmail as setGlobalEmail,
+  setPhoneNumber as setGlobalPhoneNumber,
+} from "../data/formSlice";
 
 export const PersonalInfo = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const {
+    name: globalName,
+    email: globalEmail,
+    phoneNumber: globalPhoneNumber,
+  } = useAppSelector((state) => state.form);
+  const dispatch = useAppDispatch();
+
+  const [name, setName] = useState(globalName);
+  const [email, setEmail] = useState(globalEmail);
+  const [phoneNumber, setPhoneNumber] = useState(globalPhoneNumber);
 
   const validateName = (name: string) => {
     const nameRegex = /^[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/;
@@ -17,9 +30,25 @@ export const PersonalInfo = () => {
   };
 
   const validatePhoneNumber = (phoneNumber: string) => {
-    const phoneRegex = /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+    const phoneRegex =
+      /^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
     return phoneRegex.test(phoneNumber);
-  }
+  };
+
+  const handleNameChange = (value: string) => {
+    setName(value);
+    dispatch(setGlobalName(value));
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    dispatch(setGlobalEmail(value));
+  };
+
+  const handlePhoneNumberChange = (value: string) => {
+    setPhoneNumber(value);
+    dispatch(setGlobalPhoneNumber(value));
+  };
 
   return (
     <div className="w-full flex flex-col gap-10 rounded-lg bg-white p-8 -mt-24 lg:mt-0">
@@ -38,7 +67,7 @@ export const PersonalInfo = () => {
           validationFn={validateName}
           placeholder="e.g. Stephen King"
           value={name}
-          onChange={setName}
+          onChange={handleNameChange}
         />
         <InputField
           id="email"
@@ -46,7 +75,7 @@ export const PersonalInfo = () => {
           validationFn={validateEmail}
           placeholder="e.g. stephenking@lorem.com"
           value={email}
-          onChange={setEmail}
+          onChange={handleEmailChange}
         />
         <InputField
           id="phoneNumber"
@@ -54,7 +83,7 @@ export const PersonalInfo = () => {
           validationFn={validatePhoneNumber}
           placeholder="e.g. +1 234 567 8900"
           value={phoneNumber}
-          onChange={setPhoneNumber}
+          onChange={handlePhoneNumberChange}
         />
       </form>
     </div>

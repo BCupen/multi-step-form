@@ -3,38 +3,58 @@ import { Arcade, Advanced, Pro } from "../components/Icons";
 import { RadioCardGroup } from "../components/RadioCards";
 import { RadioCardType } from "../data/types/RadioCardType";
 import { ToggleBilling } from "../components/ToggleBilling";
+import { useAppDispatch, useAppSelector } from "../data/hooks";
+import { setBillingPeriod, setPlan } from "../data/formSlice";
 
 const planItems = [
   {
     icon: <Arcade />,
     title: "Arcade",
-    cost: 9,
+    cost: {
+      mo: 9,
+      yr: 90
+    }
   },
   {
     icon: <Advanced />,
     title: "Advanced",
-    cost: 12,
+    cost: {
+      mo: 12,
+      yr: 120
+    }
   },
   {
     icon: <Pro />,
     title: "Pro",
-    cost: 15,
+    cost: {
+      mo: 15,
+      yr: 150
+    }
   },
 ];
 
 export const SelectPlan = () => {
+  const dispatch = useAppDispatch();
+  const { plan, billingPeriod } = useAppSelector(state => state.form);
   const [selectedPlan, setSelectedPlan] = useState<RadioCardType | undefined>(
-    undefined
+    plan
   );
-  const [billing, setBilling] = useState("mo");
+  const [billing, setBilling] = useState(billingPeriod);
 
   const handlePlanSelect = (plan: RadioCardType) => {
     if (selectedPlan?.title === plan.title) {
       setSelectedPlan(undefined);
+      dispatch(setPlan(undefined))
     } else {
       setSelectedPlan(plan);
+      dispatch(setPlan(plan));
     }
   };
+
+  const handleBillingChange = (value: "mo" | "yr") => {
+    setBilling(value);
+    dispatch(setBillingPeriod(value));
+  }
 
   return (
     <div className="w-full flex flex-col gap-10 rounded-lg bg-white p-8 -mt-24 lg:mt-0">
@@ -54,9 +74,25 @@ export const SelectPlan = () => {
           onSelect={handlePlanSelect}
         />
         <div className="w-full flex justify-center gap-4 bg-neutrals-magnolia rounded-lg p-4">
-          <h2 className={`${billing === 'mo' ? 'text-primary-marine' : 'text-neutrals-coolGray'} font-bold`}>Monthly</h2>
-          <ToggleBilling handleClick={setBilling} />
-          <h2 className={`${billing === 'yr' ? 'text-primary-marine' : 'text-neutrals-coolGray'} font-bold`}>Yearly</h2>
+          <h2
+            className={`${
+              billingPeriod === "mo"
+                ? "text-primary-marine"
+                : "text-neutrals-coolGray"
+            } font-bold`}
+          >
+            Monthly
+          </h2>
+          <ToggleBilling handleClick={handleBillingChange} />
+          <h2
+            className={`${
+              billingPeriod === "yr"
+                ? "text-primary-marine"
+                : "text-neutrals-coolGray"
+            } font-bold`}
+          >
+            Yearly
+          </h2>
         </div>
       </form>
     </div>

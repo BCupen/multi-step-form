@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { CheckboxCardGroup } from "../components/CheckboxCards";
 import { CheckboxCardType } from "../data/types/CheckboxCardType";
+import { useAppDispatch, useAppSelector } from "../data/hooks";
+import { setAddOns } from "../data/formSlice";
 
 const addons: CheckboxCardType[] = [
   {
@@ -30,14 +32,18 @@ const addons: CheckboxCardType[] = [
 ];
 
 export const AddOns = () => {
-    const [selectedAddOns, setSelectedAddOns] = useState<CheckboxCardType[]>([]);
+    const dispatch = useAppDispatch();
+    const {  addOns } = useAppSelector(state => state.form);
+    const [selectedAddOns, setSelectedAddOns] = useState<CheckboxCardType[]>(addOns);
 
     const handleSelection = (item: CheckboxCardType) => {
         if(selectedAddOns.some(addOn => addOn.title === item.title)){
             setSelectedAddOns(selectedAddOns.filter(addOn => addOn.title !== item.title))
+            dispatch(setAddOns(selectedAddOns.filter(addOn => addOn.title !== item.title)));
             return;
         }
         setSelectedAddOns([item, ...selectedAddOns]);
+        dispatch(setAddOns([item, ...selectedAddOns]));
     }
   return (
     <div className="w-full flex flex-col gap-10 rounded-lg bg-white p-8 -mt-24 lg:mt-0">

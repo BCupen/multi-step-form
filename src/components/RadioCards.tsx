@@ -2,13 +2,13 @@ import { RadioCardType } from "../data/types/RadioCardType";
 
 export interface RadioCardGroupProps {
   items: RadioCardType[];
-  billingPeriod: string;
+  billingPeriod: "mo" | "yr";
   selectedItem: RadioCardType | undefined;
   onSelect: (item: RadioCardType) => void;
 }
 
 export interface RadioCardItemProps extends RadioCardType {
-  billingPeriod: string;
+  billingPeriod: "mo" | "yr"; 
   isSelected: boolean;
   onSelect: (item: RadioCardType) => void;
 }
@@ -67,7 +67,7 @@ export const RadioCardItem = ({
         <div>
           <h2 className="text-primary-marine font-bold">{title}</h2>
           <p className="text-neutrals-coolGray text-base">
-            ${cost}/{billingPeriod}
+            ${cost[billingPeriod]}/{billingPeriod}
           </p>
           {isYearly && (
             <p className="text-primary-marine text-base mt-1 tracking-wide font-medium">

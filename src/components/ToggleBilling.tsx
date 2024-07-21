@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../data/hooks";
 
 interface ToggleBillingProps {
-    handleClick: (value: string) => void;
+    handleClick: (value: "mo" | "yr") => void;
 }
 
 export const ToggleBilling = ({handleClick}: ToggleBillingProps) => {
-  const [toggle, setToggle] = useState(false);
+  const { billingPeriod } = useAppSelector(state => state.form);
+  const [toggle, setToggle] = useState(!(billingPeriod === "mo"));
 
     useEffect(() => {
         if(toggle)
