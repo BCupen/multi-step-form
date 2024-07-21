@@ -10,6 +10,7 @@ export interface FormState {
   plan: RadioCardType | undefined;
   billingPeriod: "mo" | "yr";
   addOns: CheckboxCardType[];
+  hasCompleted: boolean;
 }
 
 const initialState: FormState = {
@@ -20,6 +21,7 @@ const initialState: FormState = {
   plan: undefined,
   billingPeriod: "mo",
   addOns: [],
+  hasCompleted: false,
 };
 
 export const formSlice = createSlice({
@@ -51,8 +53,20 @@ export const formSlice = createSlice({
     setAddOns: (state, action: PayloadAction<CheckboxCardType[]>) => {
       state.addOns = action.payload;
     },
+    setHasCompleted: (state, action: PayloadAction<boolean>) => {
+      state.hasCompleted = action.payload;
+    },
   },
 });
 
-export const { setActiveStep, setName, setEmail, setPhoneNumber, setPlan, setBillingPeriod, setAddOns } = formSlice.actions;
+export const {
+  setActiveStep,
+  setName,
+  setEmail,
+  setPhoneNumber,
+  setPlan,
+  setBillingPeriod,
+  setAddOns,
+  setHasCompleted,
+} = formSlice.actions;
 export default formSlice.reducer;
